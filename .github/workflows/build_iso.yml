@@ -1,0 +1,65 @@
+# This file is a fork of https://github.com/ublue-os/cosmic/blob/main/.github/workflows/build_iso.yml
+  name: Build joblue ISOs
+  on:
+    workflow_dispatch:
+    pull_request:
+      branches:
+        - main
+      paths:
+        - ".github/workflows/build_iso.yml"
+
+  env:
+    IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+  concurrency:
+    group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+    cancel-in-progress: true
+
+  jobs:
+    build-iso:
+      runs-on: ubuntu-22.04
+      permissions:
+        contents: read
+        packages: write
+        id-token: write
+      strategy:
+        fail-fast: false
+        matrix:
+          image_name: [joblue]
+          fedora_version: [40]
+      env:
+        IMAGE_TAG: latest
+        IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          
+        - name: Build ISOs
+          uses: jasonn3/build-container-installer@v1.2.2
+          id: build
+          with:
+            iso_name: ${{ matrix.image_name }}-${{ matrix.fedora_version }}.iso
+            arch: x86_64
+            image_name: ${{ matrix.image_name }}
+            image_repo: ${{ env.IMAGE_REGISTRY }}
+            # We cannot use Silverblue variant since we need the user creation options in anaconda
+            variant: "Kinoite"
+            version: ${{ matrix.fedora_version }}
+            image_tag: ${{ env.IMAGE_TAG }}
+            secure_boot_key_url: "https://github.com/ublue-os/akmods/raw/main/certs/public_key.der"
+            enrollment_password: "universalblue"
+            flatpak_remote_refs_dir: ${{ steps.flatpak-dependencies.outputs.FLATPAK_REFS_DIR }}
+            enable_flatpak_dependencies: false
+
+        - name: Upload ISOs and Checksum to Job Artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: ${{ matrix.image_name }}-${{ env.IMAGE_TAG }}
+            path: |
+              ${{ steps.build.outputs.iso_path }}
+              ${{ steps.build.outputs.iso_path }}-CHECKSUM
+            if-no-files-found: error
+            retention-days: 0
+            compression-level: 0
+            overwrite: true
