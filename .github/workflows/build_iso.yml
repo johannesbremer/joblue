@@ -53,8 +53,6 @@
             image_tag: ${{ env.IMAGE_TAG }}
             secure_boot_key_url: "https://github.com/ublue-os/akmods/raw/main/certs/public_key.der"
             enrollment_password: "universalblue"
-            flatpak_remote_refs_dir: ${{ steps.flatpak-dependencies.outputs.FLATPAK_REFS_DIR }}
-            enable_flatpak_dependencies: false
 
         - name: Upload ISOs and Checksum to Job Artifacts
           uses: actions/upload-artifact@v4
