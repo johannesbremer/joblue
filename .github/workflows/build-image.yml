@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+      - cron: '15 10 * * *'  # 10:15am UTC everyday
   push:
     branches:
       - main
