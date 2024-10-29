@@ -1,16 +1,9 @@
 # This file is a fork of https://github.com/ublue-os/cosmic/blob/main/.github/workflows/build_iso.yml
   name: Build joblue ISO
   on:
-    pull_request:
-      branches:
-        - main
-    schedule:
-      - cron: '25 10 * * *'  # Everyday 20min after latest image
-    push:
-      branches:
-        - main
-      paths-ignore:
-        - '**/README.md'
+    workflow_run:
+      workflows: ["build-ublue-custom"]
+      types: [completed] #requested
 
   env:
     IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
@@ -22,6 +15,7 @@
   jobs:
     build-iso:
       runs-on: ubuntu-22.04
+      if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'}}
       permissions:
         contents: read
         packages: write
