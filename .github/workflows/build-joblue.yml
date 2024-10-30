@@ -19,7 +19,7 @@
         contents: read
       uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
       secrets:
-        SIGNING_SECRET: inherit
+        SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
 
     build-iso:
       runs-on: ubuntu-24.04
