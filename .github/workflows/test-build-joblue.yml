@@ -1,0 +1,12 @@
+---
+    name: build-ublue-custom
+    on:
+      pull_request:
+        branches:
+          - main
+      workflow_dispatch:
+    jobs:
+      call_reusable:
+        uses: ./.github/workflows/build-image.yml
+        secrets:
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
