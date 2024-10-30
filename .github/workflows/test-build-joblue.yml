@@ -1,16 +1,16 @@
 ---
-    name: build-ublue-custom
-    on:
-      pull_request:
-        branches:
-          - main
-      workflow_dispatch:
-    jobs:
-      call_reusable:
-        permissions:
-          packages: write
-          id-token: write
-          contents: read
-        uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
-        secrets:
-          SIGNING_SECRET: inherit
+  name: build-ublue-custom
+  on:
+    pull_request:
+      branches:
+        - main
+    workflow_dispatch:
+  jobs:
+    call_reusable:
+      permissions:
+        packages: write
+        id-token: write
+        contents: read
+      uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
+      secrets:
+        SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
