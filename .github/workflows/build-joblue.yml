@@ -13,7 +13,7 @@
   
   jobs:
     reusable_job:
-      uses: ./.github/workflows/build-image.yml@main
+      uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
       secrets:
         SIGNING_SECRET: inherit
 
