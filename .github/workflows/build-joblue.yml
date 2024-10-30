@@ -13,6 +13,9 @@
   
   jobs:
     reusable_job:
+      permissions:
+        packages: write
+        id-token: write
       uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
       secrets:
         SIGNING_SECRET: inherit
