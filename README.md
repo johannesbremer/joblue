@@ -23,3 +23,6 @@ or by rebasing from an existing Fedora Atomic installation as shown below:
   ```
   systemctl reboot
   ```
+
+If you're running joblue in a VM, please make sure to check:
+  - [x] `3D acceleration`

@@ -13,9 +13,9 @@
   
   jobs:
     reusable_job:
-      uses: ./.github/workflows/build-image.yml
+      uses: ./.github/workflows/build-image.yml@main
       secrets:
-        SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+        SIGNING_SECRET: inherit
 
     build-iso:
       runs-on: ubuntu-24.04
