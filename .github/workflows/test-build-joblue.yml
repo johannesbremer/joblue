@@ -7,6 +7,6 @@
       workflow_dispatch:
     jobs:
       call_reusable:
-        uses: ./.github/workflows/build-image.yml@main
+        uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
         secrets:
           SIGNING_SECRET: inherit
