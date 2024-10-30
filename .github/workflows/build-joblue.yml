@@ -16,6 +16,7 @@
       permissions:
         packages: write
         id-token: write
+        contents: read
       uses: johannesbremer/joblue/.github/workflows/build-image.yml@main
       secrets:
         SIGNING_SECRET: inherit
