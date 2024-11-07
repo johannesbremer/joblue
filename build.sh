@@ -15,9 +15,9 @@ RELEASE="$(rpm -E %fedora)"
 # this installs a package from fedora repos
 rpm-ostree install neovim nu gitui zathura cargo golang pnpm alacritty
 
-# this would install a package from rpmfusion
-# rpm-ostree install vlc
-
-#### Example for enabling a System Unit File
-
-systemctl enable podman.socket
+# Pause Media When Headphones Disconnect
+git clone --depth 1 https://github.com/johannesbremer/pause-systemd.git
+cp pause-systemd/playerctl-pause.path /etc/systemd/user/playerctl-pause.path
+cp pause-systemd/playerctl-pause.service /etc/systemd/user/playerctl-pause.service
+rm -r pause-systemd/
+systemctl enable --global playerctl-pause.path
